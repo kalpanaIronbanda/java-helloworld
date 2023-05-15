@@ -5,7 +5,7 @@ pipeline{
             steps{
                 script{
                     sh '''
-                    mvn clean package
+                    echo "hello"
                     '''
                 }
             }
@@ -14,7 +14,7 @@ pipeline{
             steps{
                 script{
                     sh '''
-                    echo 'build success'
+                    echo "success"
                     '''
                 }
             }
