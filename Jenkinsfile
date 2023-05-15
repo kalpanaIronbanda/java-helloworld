@@ -6,6 +6,7 @@ pipeline{
                 script{
                     sh '''
                     echo "hello"
+                    mvn clean package
                     '''
                 }
             }
