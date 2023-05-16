@@ -12,7 +12,7 @@ pipeline{
                     /opt/maven/bin/mvn clean package
                     rm -fr *.zip
                     zip -r java-${BUILD_NUMBER}.zip *
-                    
+                    aws s3 java-${BUILD_NUMBER}.zip s3://${bucketname}/
                     '''
                 }
             }
