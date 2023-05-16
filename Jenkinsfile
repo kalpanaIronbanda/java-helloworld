@@ -21,7 +21,7 @@ pipeline{
         stage('Deploy'){
             steps{
                 script{
-                    sh '''
+                    sh """
                     echo 'deploying.....'
                     aws s3 cp s3://${bucketname}/java-${BUILD_NUMBER}.zip .
                     ssh ec2-user@${hostname} 'sudo rm -rf *'
@@ -29,7 +29,7 @@ pipeline{
                     ssh ec2-user@${hostname} 'unzip java-${BUILD_NUMBER}.zip && sudo rm -rf *.zip' 
                     rm -rf *.zip 
                     echo 'deployed successfully!'
-                    '''
+                    """
                 }
             }
         }  
