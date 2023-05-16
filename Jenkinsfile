@@ -13,6 +13,7 @@ pipeline{
                     rm -fr *.zip
                     zip -r java-${BUILD_NUMBER}.zip *
                     aws s3 cp java-${BUILD_NUMBER}.zip s3://${bucketname}/
+                    rm -rf *
                     '''
                 }
             }
@@ -21,7 +22,9 @@ pipeline{
             steps{
                 script{
                     sh '''
-                    echo "success"
+                    aws s3 cp s3://${bucketname}/java-${BUILD_NUMBER}.zip .
+                    scp java-${BUILD_NUMBER}.zip ec2-user@${hostname}:/home/ec2-user
+        
                     '''
                 }
             }
