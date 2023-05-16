@@ -33,7 +33,7 @@ pipeline{
                 script{
                     sh '''
                     echo "Installing tomcat...."
-                    ec2-user@${hostname} "sh tomcat.sh"
+                    ssh ec2-user@${hostname} "sudo sh tomcat.sh"
                     echo 'Installed successfully'
                     '''
                 }
