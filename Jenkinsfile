@@ -22,7 +22,7 @@ pipeline{
                     sh '''
                     echo "deploying....."
                     aws s3 cp s3://${bucketname}/java-hello-world.war .
-                    scp college-$BUILD_NUMBER.zip ec2-user@${hostname}:/home/ec2-user/
+                    scp java-hello-world.war ec2-user@${hostname}:/home/ec2-user/
                     echo "deployed successfully!"
                     '''
                 }
