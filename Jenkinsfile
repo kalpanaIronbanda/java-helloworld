@@ -43,9 +43,11 @@ pipeline{
         stage('Deploy'){
             steps{
                 script{
-                    sh """
+                    sh '''
                     echo 'deploying.....'
-                    """
+                    ssh ec2-user@${hostname} "cp -r java-hello-world.war /opt/tomcat/webapps && nohub /opt/tomcat/bin/startup.sh &" 
+
+                    '''
                 }
             }
         }  
