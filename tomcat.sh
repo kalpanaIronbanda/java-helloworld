@@ -7,6 +7,6 @@ unzip apache-tomcat-11.0.0-M6-windows-x64.zip
 sudo rm -f *.zip
 sudo ln -s /opt/apache-tomcat-11.0.0-M6/ tomcat
 cd tomcat/bin/
-chmod 755 *.sh
+sudo chmod 755 *
 
 

@@ -45,8 +45,7 @@ pipeline{
                 script{
                     sh '''
                     echo 'deploying.....'
-                    ssh ec2-user@${hostname} "cp -r java-hello-world.war /opt/tomcat/webapps && nohub /opt/tomcat/bin/startup.sh &" 
-
+                    ssh ec2-user@${hostname} "sudo cp -r java-hello-world.war /opt/tomcat/webapps && sudo sh /opt/tomcat/bin/startup.sh" 
                     '''
                 }
             }
