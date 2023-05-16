@@ -23,6 +23,7 @@ pipeline{
                     echo "coping the war file....."
                     aws s3 cp s3://${bucketname}/java-hello-world.war .
                     scp java-hello-world.war ec2-user@${hostname}:/home/ec2-user/
+                    scp tomcat.sh ec2-user@${hostname}:/home/ec2-user/
                     echo "copied to instance successfully!"
                     '''
                 }
