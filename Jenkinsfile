@@ -6,7 +6,7 @@ pipeline{
                 script{
                     sh '''
                     echo "hello"
-                    mvn clean package
+                    /opt/maven/bin/mvn clean package
                     '''
                 }
             }
