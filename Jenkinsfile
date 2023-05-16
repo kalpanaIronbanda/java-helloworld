@@ -10,7 +10,7 @@ pipeline{
                 script{
                     sh '''
                     /opt/maven/bin/mvn clean package
-                    aws s3 target/java-hello-world.war cp s3://${bucketname}/java-hello-world.war
+                    aws s3 cp target/java-hello-world.war s3://${bucketname}/java-hello-world.war
                     '''
                 }
             }
