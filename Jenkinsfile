@@ -31,11 +31,11 @@ pipeline{
         stage('Installing Tomcat'){
             steps{
                 script{
-                    sh """
-                    echo 'Installing tomcat....'
-                    sh tomcat.sh 
+                    sh '''
+                    echo "Installing tomcat...."
+                    ec2-user@${hostname} "sh tomcat.sh"
                     echo 'Installed successfully'
-                    """
+                    '''
                 }
             }
         }
