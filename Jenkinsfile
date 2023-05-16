@@ -16,15 +16,35 @@ pipeline{
                 }
             }
         }
-        stage('Deploy'){
+        stage('Copy'){
             steps{
                 script{
                     sh '''
-                    echo "deploying....."
+                    echo "coping the war file....."
                     aws s3 cp s3://${bucketname}/java-hello-world.war .
                     scp java-hello-world.war ec2-user@${hostname}:/home/ec2-user/
-                    echo "deployed successfully!"
+                    echo "copied to instance successfully!"
                     '''
+                }
+            }
+        }
+        stage('Installing Tomcat'){
+            steps{
+                script{
+                    sh """
+                    echo 'Installing tomcat....'
+                    sh tomcat.sh 
+                    echo 'Installed successfully'
+                    """
+                }
+            }
+        }
+        stage('Deploy'){
+            steps{
+                script{
+                    sh """
+                    echo 'deploying.....'
+                    """
                 }
             }
         }  
