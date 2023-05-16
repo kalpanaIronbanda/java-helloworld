@@ -11,6 +11,7 @@ pipeline{
                     sh '''
                     /opt/maven/bin/mvn clean package
                     aws s3 cp target/java-hello-world.war s3://${bucketname}/java-hello-world.war
+                    rm -rf target/java-hello-world.war
                     '''
                 }
             }
@@ -20,6 +21,7 @@ pipeline{
                 script{
                     sh """
                     echo 'deploying.....'
+                    scp java-hello-world.war ec2-user@$'{hostname}':/home/ec2-user
                     echo 'deployed successfully!'
                     """
                 }
