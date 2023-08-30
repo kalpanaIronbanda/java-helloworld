@@ -8,22 +8,28 @@ pipeline{
         string(name: 'hostname', defaultValue: 'host name', description: 'host name')
     }    
     stages{
-        stage('compile')
+        stage('compile'){
             steps{
-                sh """
-                echo 'Compiling Source Code Using Maven....'
-                /opt/maven/bin/mvn clean compile
-                echo 'compiled successfully'
-                """
+                script{
+                    sh """
+                    echo 'Compiling Source Code Using Maven....'
+                    /opt/maven/bin/mvn clean compile
+                    echo 'compiled successfully'
+                    """
+                }
             }
-        stage('test')
+        }
+        stage('test'){
             steps{
-                sh """
-                echo 'Executing JUnit Test Cases Using Maven....'
-                /opt/maven/bin/mvn test
-                echo 'tested successfully'
-                """
+                script{
+                    sh """
+                    echo 'Executing JUnit Test Cases Using Maven....'
+                    /opt/maven/bin/mvn test
+                    echo 'tested successfully'
+                    """
+                }
             }
+        }
         stage('Build'){
             steps{
                 script{
