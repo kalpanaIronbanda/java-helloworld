@@ -37,8 +37,6 @@ pipeline{
                     echo "Packaging the Application as WAR...."
                     /opt/maven/bin/mvn package
                     echo "package successfull"
-                    aws s3 cp target/java-hello-world.war s3://${bucketname}/java-hello-world.war
-                    rm -rf target/java-hello-world.war
                     '''
                 }
             }
