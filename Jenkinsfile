@@ -13,7 +13,7 @@ pipeline{
                 echo 'compiled successfully'
                 """
             }
-        stage('compile')
+        stage('test')
             steps{
                 sh """
                 echo 'Executing JUnit Test Cases Using Maven....'
