@@ -5,11 +5,29 @@ pipeline{
         string(name: 'hostname', defaultValue: 'host name', description: 'host name')
     }    
     stages{
+        stage('compile')
+            steps{
+                sh """
+                echo 'Compiling Source Code Using Maven....'
+                /opt/maven/bin/mvn clean compile
+                echo 'compiled successfully'
+                """
+            }
+        stage('compile')
+            steps{
+                sh """
+                echo 'Executing JUnit Test Cases Using Maven....'
+                /opt/maven/bin/mvn test
+                echo 'tested successfully'
+                """
+            }
         stage('Build'){
             steps{
                 script{
                     sh '''
-                    /opt/maven/bin/mvn clean package
+                    echo "Packaging the Application as WAR...."
+                    /opt/maven/bin/mvn package
+                    echo "package successfull"
                     aws s3 cp target/java-hello-world.war s3://${bucketname}/java-hello-world.war
                     rm -rf target/java-hello-world.war
                     '''
@@ -20,10 +38,15 @@ pipeline{
             steps{
                 script{
                     sh '''
-                    echo "coping the war file....."
+                    echo "storing the war file in artifactory....."
+                    aws s3 cp target/java-hello-world.war s3://${bucketname}/java-hello-world.war
+                    echo "stored successfully"
+                    echo "cleaning the target folder.."
+                    rm -rf target/java-hello-world.war
+                    echo "folder is clear"
+                    echo "coping the war file from artifactory to the instance...."
                     aws s3 cp s3://${bucketname}/java-hello-world.war .
                     scp java-hello-world.war ec2-user@${hostname}:/home/ec2-user/
-                    scp tomcat.sh ec2-user@${hostname}:/home/ec2-user/
                     echo "copied to instance successfully!"
                     '''
                 }
@@ -34,7 +57,8 @@ pipeline{
                 script{
                     sh '''
                     echo "Installing tomcat...."
-                    ssh ec2-user@${hostname} "sudo sh tomcat.sh"
+                    scp tomcat.sh ec2-user@${hostname}:/home/ec2-user/opt
+                    ssh ec2-user@${hostname} "cd /opt && sudo sh tomcat.sh"
                     echo 'Installed successfully'
                     '''
                 }
@@ -44,8 +68,9 @@ pipeline{
             steps{
                 script{
                     sh '''
-                    echo 'deploying.....'
+                    echo 'deploying the war application to the target server.....'
                     ssh ec2-user@${hostname} "sudo cp -r java-hello-world.war /opt/tomcat/webapps && sudo sh /opt/tomcat/bin/startup.sh" 
+                    echo "deployed successfully"
                     '''
                 }
             }
