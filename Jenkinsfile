@@ -1,5 +1,7 @@
 pipeline{
-    agent maven-slave
+    agent {
+        lable "maven-slave"
+    }
     parameters{
         string(name: 'bucketname', defaultValue: 'bucket name', description: 'bucket name')
         string(name: 'hostname', defaultValue: 'host name', description: 'host name')
